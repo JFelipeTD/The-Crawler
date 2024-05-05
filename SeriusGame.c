@@ -2,11 +2,31 @@
 #include <stdlib.h>
 #include <time.h>
 
+
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main(int argc, char *argv[]) {
 	char escolha;
 	int  UmfaseI[5];
+			int i;
+		    int j;
+		    int espaco_j;
+		    
+		    
+		    
+		    
+					char mapa1[10][10]= {
+					{'*','*','*','*','*','*','*','*','*','*'},
+		            {'*',' ',' ',' ','D',' ',' ',' ','@','*'},
+		            {'*','X','X','X','*',' ','*',' ',' ','*'},
+		            {'*','X','X','X','*',' ','*',' ',' ','*'},
+		            {'*','@',' ',' ','*',' ','*',' ','&','*'},
+		            {'*','*','*','*','*',' ','*','*','*','*'},
+		            {'*',' ',' ',' ','D',' ','D',' ',' ','*'},
+		            {'*','X','X','X','*',' ','*',' ','X','*'},
+		            {'*','>',' ',' ','*','D','*',' ',' ','*'},
+		            {'*','*','*','*','*','*','*','*','*','*'}};
+				
 	
 	while(escolha != 'c'){
 		system("cls");
@@ -22,6 +42,37 @@ int main(int argc, char *argv[]) {
 		}
 			switch(escolha){
 				case('a'):
+					for (i=0; i<10;i++){
+					
+						for(espaco_j=0;espaco_j<70;espaco_j++){
+						
+						printf(" ");}
+						
+				for (j=0; j<10; j++){
+				
+				
+					printf("%c", mapa1[i][j]);
+					   printf(" ");
+					
+					
+						}printf("\n");
+				}
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					system("pause");
+					break;
+			
 				case('b'):
 					escolha = 'h';
 					system("cls");
