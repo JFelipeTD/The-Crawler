@@ -2,14 +2,61 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#define BOARD_SIZE 10
+#include <stdbool.h>
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+
+  void printBoard(char board[][BOARD_SIZE], int playerX, int playerY) {
+   int i;
+   int j;
+   
+    for ( i = 0; i < BOARD_SIZE; i++) {
+        for ( j = 0; j < BOARD_SIZE; j++) {
+            if (i == playerY && j == playerX) {
+                printf("P ");
+            } else {
+                printf("%c ", board[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}
+
+
+
+void movePlayer(char board[][BOARD_SIZE], int *playerX, int *playerY, char move) {
+    int newX = *playerX;
+    int newY = *playerY;
+
+    switch (move) {
+        case 'W':
+        case 'w':
+            newY = *playerY - 1;
+            break;
+        case 'A':
+        case 'a':
+            newX = *playerX - 1;
+            break;
+        case 'S':
+        case 's':
+            newY = *playerY + 1;
+            break;
+        case 'D':
+        case 'd':
+            newX = *playerX + 1;
+            break;
+    }
+}
+
+
+
 
 int main(int argc, char *argv[]) {
 	//Declaracao de variaveis
 	char escolha;
 	int  UmfaseI[5];
-	int i;
-	int j;
+
 	int espaco_j;
 	int chave = 1;
 	int chave2 = 1;
@@ -26,8 +73,10 @@ int main(int argc, char *argv[]) {
 	int monstroN1_1Y = 3;
 	int monstroN1_2X = 8;
 	int monstroN1_2Y = 7;
-	char movimento;
-	char mapa1[10][10] = {
+	int playerX = 1; 
+    int playerY = 1;
+	char move;
+	char board[BOARD_SIZE][BOARD_SIZE] = {
 	{'*','*','*','*','*','*','*','*','*','*'},
 	{'*',' ',' ',' ','D',' ',' ',' ','@','*'},
 	{'*',' ',' ',' ','*',' ','*',' ',' ','*'},
@@ -55,263 +104,16 @@ int main(int argc, char *argv[]) {
 	//opcoes do menu
 			switch(escolha){
 				case('a'):
-					while(vida > 0 && vida < 4){
-					system("cls");
-					//Criacao do mapa
-					for(i = 0; i < 10; i++){
-						for(espaco_j = 0; espaco_j < 70; espaco_j++){
-						printf(" ");
-						}
-						for (j=0; j<10; j++){
-						printf("%c", mapa1[i][j]);
-					  	printf(" ");
-						}
-						printf("\n");
-					}
-					//Final do Jogo
-					if(mapa1[posicaoY][posicaoX] == mapa1[9][5]){
-						vida = 4;
-						system("cls");
-						printf("Muito Obrigado por Jogar o Nosso Jogo!!!\n");
-						system("pause");
-						escolha = 'c';
-						break;
-					}
-					//Ler o movimento do jogador
-					while(1){
-						if(_kbhit()){
-							movimento = _getch();
-							break;
-						}
-					}
-					//Interacao da chave e porta
-					if(movimento == 'i'){
-						if(mapa1[posicaoY][posicaoX] == mapa1[1][8]){
-							chave = 0;
-							porta = 0;
-						}
-						if(mapa1[posicaoY][posicaoX] == mapa1[8][8]){
-							chave2 = 0;
-							porta2 = 0;
-						}
-						if(mapa1[posicaoY][posicaoX] == mapa1[4][1]){
-							chave3 = 0;
-							porta3 = 0;
-						}
-					}
-					//Porta aberta
-					if(porta == 0){
-						mapa1[6][6] = '=';
-					}
-					if(porta2 == 0){
-						mapa1[1][4] = '=';
-					}
-					if(porta3 == 0){
-						mapa1[9][5] = '=';
-					}
-					//Debug da chave
-					if(chave == 1 && (posicaoY != 1 || posicaoX != 8)){
-						mapa1[1][8] = '@';
-					}
-					if(chave2 == 1 && (posicaoY != 8 || posicaoX != 8)){
-						mapa1[8][8] = '@';
-					}
-					if(chave3 == 1 && (posicaoY != 4 || posicaoX != 1)){
-						mapa1[4][1] = '@';
-					}
-					//Laco para os movimentos e as interacoes do personagem
-					if(movimento == 'w'){
-						if(mapa1[posicaoY - 1][posicaoX] == ' ' || mapa1[posicaoY - 1][posicaoX] == '@' || mapa1[posicaoY - 1][posicaoX] == '='){
-							mapa1[posicaoY][posicaoX] = ' ';
-							if((mapa1[posicaoY][posicaoX] == mapa1[1][8] && chave == 1) || (mapa1[posicaoY][posicaoX] == mapa1[8][8] && chave2 == 1) || (mapa1[posicaoY][posicaoX] == mapa1[4][1] && chave3 == 1)){
-								mapa1[posicaoY][posicaoX] = '@';
-							}
-							posicaoY--;
-							mapa1[posicaoY][posicaoX] = '&';
-						} else if(mapa1[posicaoY - 1][posicaoX] == 'X'){
-							mapa1[posicaoY][posicaoX] = ' ';
-							posicaoX = 8;
-							posicaoY = 4;
-							mapa1[4][8] = '&';
-							vida = vida - 1;
-						}
-					} else if(movimento == 's'){
-						if(mapa1[posicaoY + 1][posicaoX] == ' ' || mapa1[posicaoY + 1][posicaoX] == '@' || mapa1[posicaoY + 1][posicaoX] == '='){
-							mapa1[posicaoY][posicaoX] = ' ';
-							if((mapa1[posicaoY][posicaoX] == mapa1[1][8] && chave == 1) || (mapa1[posicaoY][posicaoX] == mapa1[8][8] && chave2 == 1) || (mapa1[posicaoY][posicaoX] == mapa1[4][1] && chave3 == 1)){
-								mapa1[posicaoY][posicaoX] = '@';
-							}
-							posicaoY++;
-							mapa1[posicaoY][posicaoX] = '&';
-						} else if(mapa1[posicaoY + 1][posicaoX] == 'X'){
-							mapa1[posicaoY][posicaoX] = ' ';
-							posicaoX = 8;
-							posicaoY = 4;
-							mapa1[4][8] = '&';
-							vida = vida - 1;
-						}
-					} else if(movimento == 'a'){
-						if(mapa1[posicaoY][posicaoX - 1] == ' ' || mapa1[posicaoY][posicaoX - 1] == '@' || mapa1[posicaoY][posicaoX - 1] == '='){
-							mapa1[posicaoY][posicaoX] = ' ';
-							if((mapa1[posicaoY][posicaoX] == mapa1[1][8] && chave == 1) || (mapa1[posicaoY][posicaoX] == mapa1[8][8] && chave2 == 1) || (mapa1[posicaoY][posicaoX] == mapa1[4][1] && chave3 == 1)){
-								mapa1[posicaoY][posicaoX] = '@';
-							}
-							if((mapa1[posicaoY][posicaoX] == mapa1[6][6] && porta == 0) || (mapa1[posicaoY][posicaoX] == mapa1[1][4] && porta2 == 0)){
-								mapa1[posicaoY][posicaoX] = '=';
-							}
-							posicaoX--;
-							mapa1[posicaoY][posicaoX] = '&';
-						} else if(mapa1[posicaoY][posicaoX - 1] == 'X'){
-							mapa1[posicaoY][posicaoX] = ' ';
-							posicaoX = 8;
-							posicaoY = 4;
-							mapa1[4][8] = '&';
-							vida = vida - 1;
-						}
-					} else if(movimento == 'd'){
-						if(mapa1[posicaoY][posicaoX + 1] == ' ' || mapa1[posicaoY][posicaoX + 1] == '@' || mapa1[posicaoY][posicaoX + 1] == '='){
-							mapa1[posicaoY][posicaoX] = ' ';
-							if((mapa1[posicaoY][posicaoX] == mapa1[1][8] && chave == 1) || (mapa1[posicaoY][posicaoX] == mapa1[8][8] && chave2 == 1) || (mapa1[posicaoY][posicaoX] == mapa1[4][1] && chave3 == 1)){
-								mapa1[posicaoY][posicaoX] = '@';
-							}
-							if((mapa1[posicaoY][posicaoX] == mapa1[6][6] && porta == 0) || (mapa1[posicaoY][posicaoX] == mapa1[1][4] && porta2 == 0)){
-								mapa1[posicaoY][posicaoX] = '=';
-							}
-							posicaoX++;
-							mapa1[posicaoY][posicaoX] = '&';
-						} else if(mapa1[posicaoY][posicaoX + 1] == 'X'){
-							mapa1[posicaoY][posicaoX] = ' ';
-							posicaoX = 8;
-							posicaoY = 4;
-							mapa1[4][8] = '&';
-							vida = vida - 1;
-						}
-					}
-					//Movimento do monstro nivel 1
-					srand(time(NULL));
-					movimento_Bot1 = 1 + rand()%4;
-					if(movimento_Bot1 == 1){
-						if(mapa1[monstroN1_1Y - 1][monstroN1_1X] == ' ' || mapa1[monstroN1_1Y - 1][monstroN1_1X] == '&'){
-							mapa1[monstroN1_1Y][monstroN1_1X] = ' ';
-							monstroN1_1Y--;
-							mapa1[monstroN1_1Y][monstroN1_1X] = 'X';
-							if(mapa1[monstroN1_1Y][monstroN1_1X] == mapa1[posicaoY][posicaoX]){
-								vida--;
-								posicaoY = 4;
-								posicaoX = 8;
-								mapa1[4][8] = '&';
-							}
-						}
-					} else if(movimento_Bot1 == 2){
-						if(mapa1[monstroN1_1Y + 1][monstroN1_1X] == ' ' || mapa1[monstroN1_1Y + 1][monstroN1_1X] == '&'){
-							mapa1[monstroN1_1Y][monstroN1_1X] = ' ';
-							monstroN1_1Y++;
-							mapa1[monstroN1_1Y][monstroN1_1X] = 'X';
-							if(mapa1[monstroN1_1Y][monstroN1_1X] == mapa1[posicaoY][posicaoX]){
-								vida--;
-								posicaoY = 4;
-								posicaoX = 8;
-								mapa1[4][8] = '&';
-							}
-						}
-					} else if(movimento_Bot1 == 3){
-						if(mapa1[monstroN1_1Y][monstroN1_1X - 1] == ' ' || mapa1[monstroN1_1Y][monstroN1_1X - 1] == '&'){
-							mapa1[monstroN1_1Y][monstroN1_1X] = ' ';
-							monstroN1_1X--;
-							mapa1[monstroN1_1Y][monstroN1_1X] = 'X';
-							if(mapa1[monstroN1_1Y][monstroN1_1X] == mapa1[posicaoY][posicaoX]){
-								vida--;
-								posicaoY = 4;
-								posicaoX = 8;
-								mapa1[4][8] = '&';
-							}
-						}
-					} else if(movimento_Bot1 == 4){
-						if(mapa1[monstroN1_1Y][monstroN1_1X + 1] == ' ' || mapa1[monstroN1_1Y][monstroN1_1X + 1] == '&'){
-							mapa1[monstroN1_1Y][monstroN1_1X] = ' ';
-							monstroN1_1X++;
-							mapa1[monstroN1_1Y][monstroN1_1X] = 'X';
-							if(mapa1[monstroN1_1Y][monstroN1_1X] == mapa1[posicaoY][posicaoX]){
-								vida--;
-								posicaoY = 4;
-								posicaoX = 8;
-								mapa1[4][8] = '&';
-							}
-						}
-					}
-					
-					movimento_Bot2 = 1 + rand()%4;
-					if(movimento_Bot2 == 1){
-						if(mapa1[monstroN1_2Y - 1][monstroN1_2X] == ' ' || mapa1[monstroN1_2Y - 1][monstroN1_2X] == '&'){
-							mapa1[monstroN1_2Y][monstroN1_2X] = ' ';
-							monstroN1_2Y--;
-							mapa1[monstroN1_2Y][monstroN1_2X] = 'X';
-							if(mapa1[monstroN1_2Y][monstroN1_2X] == mapa1[posicaoY][posicaoX]){
-								vida--;
-								posicaoY = 4;
-								posicaoX = 8;
-								mapa1[4][8] = '&';
-							}
-						}
-					} else if(movimento_Bot2 == 2){
-						if(mapa1[monstroN1_2Y + 1][monstroN1_2X] == ' ' || mapa1[monstroN1_2Y + 1][monstroN1_2X] == '&'){
-							mapa1[monstroN1_2Y][monstroN1_2X] = ' ';
-							monstroN1_2Y++;
-							mapa1[monstroN1_2Y][monstroN1_2X] = 'X';
-							if(mapa1[monstroN1_2Y][monstroN1_2X] == mapa1[posicaoY][posicaoX]){
-								vida--;
-								posicaoY = 4;
-								posicaoX = 8;
-								mapa1[4][8] = '&';
-							}
-						}
-					} else if(movimento_Bot2 == 3){
-						if(mapa1[monstroN1_2Y][monstroN1_2X - 1] == ' ' || mapa1[monstroN1_2Y][monstroN1_2X - 1] == '&'){
-							mapa1[monstroN1_2Y][monstroN1_2X] = ' ';
-							monstroN1_2X--;
-							mapa1[monstroN1_2Y][monstroN1_2X] = 'X';
-							if(mapa1[monstroN1_2Y][monstroN1_2X] == mapa1[posicaoY][posicaoX]){
-								vida--;
-								posicaoY = 4;
-								posicaoX = 8;
-								mapa1[4][8] = '&';
-							}
-						}
-					} else{
-						if(mapa1[monstroN1_2Y][monstroN1_2X + 1] == ' ' || mapa1[monstroN1_2Y][monstroN1_2X + 1] == '&'){
-							mapa1[monstroN1_2Y][monstroN1_2X] = ' ';
-							monstroN1_2X++;
-							mapa1[monstroN1_2Y][monstroN1_2X] = 'X';
-							if(mapa1[monstroN1_2Y][monstroN1_2X] == mapa1[posicaoY][posicaoX]){
-								vida--;
-								posicaoY = 4;
-								posicaoX = 8;
-								mapa1[4][8] = '&';
-							}
-						}
-					}
-					
-					}
-					//Tela de morte
-					system("cls");
-					if(vida == 0){
-						printf("VOCE PERDEU\nDeseja tentar novamente?\n(a) Sim\n(v) Nao\nSua escolha: ");
-						scanf("%c ", &escolha);
-					    system("cls");
-						mapa1[monstroN1_1Y][monstroN1_1X] = ' ';
-						monstroN1_1Y = 3;
-						monstroN1_1X = 2;
-						mapa1[3][2] = 'X';
-						vida = 3;
-						porta = 1;
-						porta2 = 1;
-						porta3 = 1;
-						chave = 1;
-						chave2 = 1;
-						chave3 = 1;
-					}
-					break;
+				system("cls");
+				   
+                  while (true) {
+        printBoard(board, playerX, playerY);
+        
+         scanf(" %c", &move);}
 			
+			 system("pause");
+			 
+			 break;
 				case('b'):
 					//Menu do tutorial/historia
 					escolha = 'h';
@@ -335,6 +137,7 @@ int main(int argc, char *argv[]) {
 					}
 					}
 			}
-	}
+	
+}
 	return 0;
 }
