@@ -14,7 +14,7 @@
     for ( i = 0; i < BOARD_SIZE; i++) {
         for ( j = 0; j < BOARD_SIZE; j++) {
             if (i == playerY && j == playerX) {
-                printf("P ");
+                printf("&");
             } else {
                 printf("%c ", board[i][j]);
             }
@@ -23,7 +23,18 @@
     }
 }
 
+void printBoard2(char board[][BOARD_SIZE_2]) {
+    for (int i = 0; i < BOARD_SIZE_2; i++) {
+        for (int j = 0; j < BOARD_SIZE_2; j++) {
+            printf("%c ", board[i][j]);
+        }
+        printf("\n");
+    }
+}
 
+
+
+#define BOARD_SIZE 10
 
 void movePlayer(char board[][BOARD_SIZE], int *playerX, int *playerY, char move) {
     int newX = *playerX;
@@ -46,10 +57,20 @@ void movePlayer(char board[][BOARD_SIZE], int *playerX, int *playerY, char move)
         case 'd':
             newX = *playerX + 1;
             break;
+        default:
+            
+            return;
     }
+
+      if (newX >= 0 && newX < BOARD_SIZE && newY >= 0 && newY < BOARD_SIZE) {
+        // Verificar se a nova posição não é um obstáculo
+        if (board[newY][newX] != '*') {
+            *playerX = newX;
+            *playerY = newY;
+        }
+    }
+
 }
-
-
 
 
 int main(int argc, char *argv[]) {
@@ -59,20 +80,7 @@ int main(int argc, char *argv[]) {
 
 	int espaco_j;
 	int chave = 1;
-	int chave2 = 1;
-	int chave3 = 1;
-	int porta = 1;
-	int porta2 = 1;
-	int porta3 = 1;
-	int vida = 3;
-	int movimento_Bot1;
-	int movimento_Bot2;
-	int posicaoX = 8;
-	int posicaoY = 4;
-	int monstroN1_1X = 2;
-	int monstroN1_1Y = 3;
-	int monstroN1_2X = 8;
-	int monstroN1_2Y = 7;
+	
 	int playerX = 1; 
     int playerY = 1;
 	char move;
@@ -88,6 +96,31 @@ int main(int argc, char *argv[]) {
 	{'*',' ',' ',' ','*',' ','*',' ','@','*'},
 	{'*','*','*','*','*','D','*','*','*','*'}
 	};
+	char board2[BOARD_SIZE_2][BOARD_SIZE_2] = {
+    {'*','*','*','*','*','*','*','*','*','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*',' ',' ',' ','D',' ',' ',' ','@','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*',' ',' ',' ','*',' ','*',' ',' ','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*',' ','X',' ','*',' ','*',' ',' ','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*','@',' ',' ','*',' ','*',' ','&','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*','*','*','*','*',' ','*','*','*','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*',' ',' ',' ','D',' ','D',' ',' ','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*',' ',' ',' ','*',' ','*',' ','X','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*',' ',' ',' ','*',' ','*',' ','@','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*','*','*','*','*','D','*','*','*','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*','*','*','*','*','*','*','*','*','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*',' ',' ',' ','D',' ',' ',' ','@','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*',' ',' ',' ','*',' ','*',' ',' ','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*',' ','X',' ','*',' ','*',' ',' ','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*','@',' ',' ','*',' ','*',' ','&','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*','*','*','*','*',' ','*','*','*','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*',' ',' ',' ','D',' ','D',' ',' ','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*',' ',' ',' ','*',' ','*',' ','X','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*',' ',' ',' ','*',' ','*',' ','@','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+	{'*','*','*','*','*','D','*','*','*','*','*',' ',' ',' ','*',' ','*',' ',' ','*'}
+      	
+      																					
+      												
+    };
 	//Laco para a criacao do menu
 	while(escolha != 'c'){
 		system("cls");
@@ -106,14 +139,18 @@ int main(int argc, char *argv[]) {
 				case('a'):
 				system("cls");
 				   
-                  while (true) {
-        printBoard(board, playerX, playerY);
-        
+                  while (1) {
+				  system("cls");
+       
+	    printBoard(board, playerX, playerY);
+         movePlayer(board, &playerX, &playerY, move);
          scanf(" %c", &move);}
-			
-			 system("pause");
+        
+                    
+			 
 			 
 			 break;
+			 
 				case('b'):
 					//Menu do tutorial/historia
 					escolha = 'h';
