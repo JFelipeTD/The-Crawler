@@ -1,5 +1,7 @@
 # The Crawler
 
+Jogo estilo Dungeon Crawler! Utilizado para um trabalho da faculdade, desenvolvimento foi feito em linguagem C para a disciplina de algoritmos e programação em C.
+
 Voce e uma pessoa normal mas qu está chegando ao seu limite a cada dia que passa todos os dias. Depois de uma semana longa, em uma de suas noites de jogatina no final de semana, voce sente que o cansaco acaba alcancando o seu corpo e a sua mente, entao voce decide descancar um pouco. No momento em que suas papebras se fecham voce ainda passa alguns minutos conciente, mas logo depois comeca a ouvir gotas de agua caindo no chao e ecoando no que parecia ser uma caverna, quando seus olhos se abrem, ainda com o cansaco\nda longa noite, voce percebe que esta em um calabouco com uma porta de aco pesado a sua frente. Mesmo confuso e assustado com toda aquela situacao, voce decide encontrar uma maneira de sair daquele lugar e entender melhor oque esta acontecendo no lugar.
 
 Seu principal objetivo é sair da dungeon misteriosa que voce se encontra evitando os mostros e armadilhas e fazendo puzzle para escapar/
@@ -35,3 +37,7 @@ O: Símbolo que representa um botão que o usuário pode interagir, o botão fic
 X: Símbolo que representa o monstro nível 1. Esse monstro tem um movimento aleatório para cima, para esquerda, para baixo e para direita. Caso o monstro toque no jogador, a fase é reiniciada.
 
 V: Símbolo que representa o monstro nível 2. Esse monstro segue o jogador até o final da fase. Caso o monstro toque no jogador, a fase é reiniciada.
+
+Autores:
+Paulo Ricardo
+João Felipe Tavora
